@@ -13,8 +13,8 @@ PalletTown_Object:
 	bg_event 7,  3, 7 ; PalletTownText7
 
 	def_object_events
-	object_event  4,  6, SPRITE_OAK, STAY, NONE, 1 ; person
-	object_event  2,  5, SPRITE_GIRL, WALK, ANY_DIR, 2 ; person
-	object_event 8, 6, SPRITE_FISHER, WALK, ANY_DIR, 3 ; person
+	object_event  5,  5, SPRITE_OAK, STAY, NONE, 1 ; person
+	object_event  1,  4, SPRITE_GIRL, WALK, ANY_DIR, 2 ; person
+	object_event 2, 5, SPRITE_FISHER, WALK, ANY_DIR, 3 ; person
 
 	def_warps_to PALLET_TOWN
