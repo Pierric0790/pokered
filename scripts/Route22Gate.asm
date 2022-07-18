@@ -4,7 +4,7 @@ Route22Gate_Script:
 	ld a, [wRoute22GateCurScript]
 	call CallFunctionInTable
 	ld a, [wYCoord]
-	cp 4
+	cp 1
 	ld a, ROUTE_23
 	jr c, .asm_1e69a
 	ld a, ROUTE_22
@@ -28,8 +28,8 @@ Route22GateScript0:
 	jp DisplayTextID
 
 Route22GateScriptCoords:
-	dbmapcoord  4,  2
-	dbmapcoord  5,  2
+	dbmapcoord  0,  1
+	dbmapcoord  1,  1
 	db -1 ; end
 
 Route22GateScript_1e6ba:

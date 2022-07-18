@@ -48,7 +48,7 @@ DEF NORTH_SOUTH EQU 2
 ; 02: sprite set ID if in the West or North side
 ; 03: sprite set ID if in the East or South side
 SplitMapSpriteSets:
-	db NORTH_SOUTH, 37, $02, $01 ; $f1
+	db NORTH_SOUTH, 6, $02, $01 ; $f1
 	db NORTH_SOUTH, 50, $02, $03 ; $f2
 	db EAST_WEST,   57, $04, $08 ; $f3
 	db NORTH_SOUTH, 21, $03, $08 ; $f4

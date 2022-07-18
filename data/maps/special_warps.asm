@@ -45,7 +45,7 @@ MACRO special_warp_spec
 ENDM
 
 FirstMapSpec:
-	special_warp_spec REDS_HOUSE_2F, 3, 6, REDS_HOUSE_2
+	special_warp_spec REDS_HOUSE_2F, 2, 2, REDS_HOUSE_2
 TradeCenterSpec1:
 	special_warp_spec TRADE_CENTER,  3, 4, CLUB
 TradeCenterSpec2:
@@ -76,8 +76,8 @@ FlyWarpDataPtr:
 	fly_warp_spec ROUTE_4,         .Route4
 	fly_warp_spec ROUTE_10,        .Route10
 
-.PalletTown:     fly_warp PALLET_TOWN,      5,  6
-.ViridianCity:   fly_warp VIRIDIAN_CITY,   23, 26
+.PalletTown:     fly_warp PALLET_TOWN,      1,  2
+.ViridianCity:   fly_warp VIRIDIAN_CITY,   	7, 12
 .PewterCity:     fly_warp PEWTER_CITY,     13, 26
 .CeruleanCity:   fly_warp CERULEAN_CITY,   19, 18
 .LavenderTown:   fly_warp LAVENDER_TOWN,    3,  6
