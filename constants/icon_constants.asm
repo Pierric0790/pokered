@@ -12,6 +12,6 @@
 	const ICON_SNAKE     ; $8
 	const ICON_QUADRUPED ; $9
 
-DEF ICON_TRADEBUBBLE EQU $e
+ICON_TRADEBUBBLE EQU $e
 
-DEF ICONOFFSET EQU $40 ; difference between alternating icon frames' tile IDs
+ICONOFFSET EQU $40 ; difference between alternating icon frames' tile IDs

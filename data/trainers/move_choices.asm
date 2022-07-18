@@ -1,9 +1,9 @@
-MACRO move_choices
+move_choices: MACRO
 	IF _NARG
 		db \# ; all args
 	ENDC
 	db 0 ; end
-	DEF list_index += 1
+list_index += 1
 ENDM
 
 ; move choice modification methods that are applied for each trainer class

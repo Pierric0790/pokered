@@ -1,51 +1,51 @@
-MACRO ATTR_BLK
+ATTR_BLK: MACRO
 ; This is a command macro.
 ; Use ATTR_BLK_DATA for data sets.
 	db ($4 << 3) + ((\1 * 6) / 16 + 1)
 	db \1
 ENDM
 
-MACRO ATTR_BLK_DATA
+ATTR_BLK_DATA: MACRO
 	db \1 ; which regions are affected
 	db \2 + (\3 << 2) + (\4 << 4) ; palette for each region
 	db \5, \6, \7, \8 ; x1, y1, x2, y2
 ENDM
 
-MACRO PAL_SET
+PAL_SET: MACRO
 	db ($a << 3) + 1
 	dw \1, \2, \3, \4
 	ds 7, 0
 ENDM
 
-MACRO PAL_TRN
+PAL_TRN: MACRO
 	db ($b << 3) + 1
 	ds 15, 0
 ENDM
 
-MACRO MLT_REQ
+MLT_REQ: MACRO
 	db ($11 << 3) + 1
 	db \1 - 1
 	ds 14, 0
 ENDM
 
-MACRO CHR_TRN
+CHR_TRN: MACRO
 	db ($13 << 3) + 1
 	db \1 + (\2 << 1)
 	ds 14, 0
 ENDM
 
-MACRO PCT_TRN
+PCT_TRN: MACRO
 	db ($14 << 3) + 1
 	ds 15, 0
 ENDM
 
-MACRO MASK_EN
+MASK_EN: MACRO
 	db ($17 << 3) + 1
 	db \1
 	ds 14, 0
 ENDM
 
-MACRO DATA_SND
+DATA_SND: MACRO
 	db ($f << 3) + 1
 	dw \1 ; address
 	db \2 ; bank

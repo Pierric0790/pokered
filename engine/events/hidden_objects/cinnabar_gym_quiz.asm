@@ -183,12 +183,12 @@ UpdateCinnabarGymGateTileBlocks_::
 	jr nz, .loop
 	ret
 
-MACRO gym_gate_coord
+gym_gate_coord: MACRO
 	db \1, \2, \3, 0
 ENDM
 
-DEF HORIZONTAL_GATE_BLOCK EQU $54
-DEF VERTICAL_GATE_BLOCK   EQU $5f
+HORIZONTAL_GATE_BLOCK EQU $54
+VERTICAL_GATE_BLOCK   EQU $5f
 
 CinnabarGymGateCoords:
 	; x coord, y coord, block id

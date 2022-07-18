@@ -1,12 +1,12 @@
 ; Used in wram.asm
 
-MACRO flag_array
+flag_array: MACRO
 	ds ((\1) + 7) / 8
 ENDM
 
-DEF BOX_STRUCT_LENGTH EQU 25 + NUM_MOVES * 2
+BOX_STRUCT_LENGTH EQU 25 + NUM_MOVES * 2
 
-MACRO box_struct
+box_struct: MACRO
 \1Species::    db
 \1HP::         dw
 \1BoxLevel::   db
@@ -27,7 +27,7 @@ MACRO box_struct
 \1PP::         ds NUM_MOVES
 ENDM
 
-MACRO party_struct
+party_struct: MACRO
 	box_struct \1
 \1Level::      db
 \1Stats::
@@ -38,7 +38,7 @@ MACRO party_struct
 \1Special::    dw
 ENDM
 
-MACRO battle_struct
+battle_struct: MACRO
 \1Species::    db
 \1HP::         dw
 \1PartyPos::
@@ -60,7 +60,7 @@ MACRO battle_struct
 \1PP::         ds NUM_MOVES
 ENDM
 
-MACRO spritestatedata1
+spritestatedata1: MACRO
 \1PictureID::             db
 \1MovementStatus::        db
 \1ImageIndex::            db
@@ -78,7 +78,7 @@ MACRO spritestatedata1
 \1End::
 ENDM
 
-MACRO spritestatedata2
+spritestatedata2: MACRO
 \1WalkAnimationCounter:: db
 	ds 1
 \1YDisplacement::        db
@@ -96,14 +96,14 @@ MACRO spritestatedata2
 \1End::
 ENDM
 
-MACRO sprite_oam_struct
+sprite_oam_struct: MACRO
 \1YCoord::     db
 \1XCoord::     db
 \1TileID::     db
 \1Attributes:: db
 ENDM
 
-MACRO map_connection_struct
+map_connection_struct: MACRO
 \1ConnectedMap::            db
 \1ConnectionStripSrc::      dw
 \1ConnectionStripDest::     dw

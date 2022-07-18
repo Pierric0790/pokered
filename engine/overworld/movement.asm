@@ -1,4 +1,4 @@
-DEF MAP_TILESET_SIZE EQU $60
+MAP_TILESET_SIZE EQU $60
 
 UpdatePlayerSprite:
 	ld a, [wSpritePlayerStateData2WalkAnimationCounter]

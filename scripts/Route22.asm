@@ -75,8 +75,8 @@ Route22Script0:
 	ret
 
 .Route22RivalBattleCoords
-	dbmapcoord 8,  1
-	dbmapcoord 8,  0
+	dbmapcoord 29,  4
+	dbmapcoord 29,  5
 	db -1 ; end
 
 .firstRivalBattle
@@ -109,9 +109,9 @@ Route22Script1:
 	ld a, [wcf0d]
 	cp $1
 	jr nz, .asm_50f78
-	ld a, PLAYER_DIR_UP
+	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerMovingDirection], a
-	ld a, SPRITE_FACING_DOWN
+	ld a, SPRITE_FACING_UP
 	jr .asm_50f7a
 .asm_50f78
 	ld a, SPRITE_FACING_RIGHT
@@ -205,10 +205,13 @@ Route22RivalExitMovementData1:
 	db -1 ; end
 
 Route22RivalExitMovementData2:
+	db NPC_MOVEMENT_UP
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
 	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN

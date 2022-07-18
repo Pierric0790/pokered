@@ -1,4 +1,4 @@
-MACRO tile_ids
+tile_ids: MACRO
 	dw \1
 	dn \3, \2
 ENDM

@@ -1,7 +1,7 @@
-MACRO mapconst
+mapconst: MACRO
 	const \1
-	DEF \1_HEIGHT EQU \2
-	DEF \1_WIDTH EQU \3
+\1_HEIGHT EQU \2
+\1_WIDTH EQU \3
 ENDM
 
 ; map ids
@@ -12,12 +12,11 @@ ENDM
 ; - MapHSPointers (see data/maps/hide_show_data.asm)
 ; - MapSpriteSets (see data/maps/sprite_sets.asm)
 ; - ExternalMapEntries (see data/maps/town_map_entries.asm)
-; - WildDataPointers (see data/wild/grass_water.asm)
 ; Each map also has associated data in maps.asm.
 ; Order: towns/cities, then routes, then indoor/dungeon maps
 	const_def
-	mapconst PALLET_TOWN,                    4,  5 ; $00
-	mapconst VIRIDIAN_CITY,                  7,  7 ; $01
+	mapconst PALLET_TOWN,                    9, 10 ; $00
+	mapconst VIRIDIAN_CITY,                 18, 20 ; $01
 	mapconst PEWTER_CITY,                   18, 20 ; $02
 	mapconst CERULEAN_CITY,                 18, 20 ; $03
 	mapconst LAVENDER_TOWN,                  9, 10 ; $04
@@ -27,11 +26,11 @@ ENDM
 	mapconst CINNABAR_ISLAND,                9, 10 ; $08
 	mapconst INDIGO_PLATEAU,                 9, 10 ; $09
 	mapconst SAFFRON_CITY,                  18, 20 ; $0A
-DEF NUM_CITY_MAPS EQU const_value
+NUM_CITY_MAPS EQU const_value
 	mapconst UNUSED_MAP_0B,                  0,  0 ; $0B
-DEF FIRST_ROUTE_MAP EQU const_value
-	mapconst ROUTE_1,                        4,  5 ; $0C
-	mapconst ROUTE_2,                        6,  5 ; $0D
+FIRST_ROUTE_MAP EQU const_value
+	mapconst ROUTE_1,                       18, 10 ; $0C
+	mapconst ROUTE_2,                       36, 10 ; $0D
 	mapconst ROUTE_3,                        9, 35 ; $0E
 	mapconst ROUTE_4,                        9, 45 ; $0F
 	mapconst ROUTE_5,                       18, 10 ; $10
@@ -51,25 +50,25 @@ DEF FIRST_ROUTE_MAP EQU const_value
 	mapconst ROUTE_19,                      27, 10 ; $1E
 	mapconst ROUTE_20,                       9, 50 ; $1F
 	mapconst ROUTE_21,                      45, 10 ; $20
-	mapconst ROUTE_22,                       4,  6 ; $21
+	mapconst ROUTE_22,                       9, 20 ; $21
 	mapconst ROUTE_23,                      72, 10 ; $22
 	mapconst ROUTE_24,                      18, 10 ; $23
 	mapconst ROUTE_25,                       9, 30 ; $24
-DEF FIRST_INDOOR_MAP EQU const_value
-	mapconst REDS_HOUSE_1F,                  2,  3 ; $25
-	mapconst REDS_HOUSE_2F,                  2,  3 ; $26
-	mapconst BLUES_HOUSE,                    3,  3 ; $27
+FIRST_INDOOR_MAP EQU const_value
+	mapconst REDS_HOUSE_1F,                  4,  4 ; $25
+	mapconst REDS_HOUSE_2F,                  4,  4 ; $26
+	mapconst BLUES_HOUSE,                    4,  4 ; $27
 	mapconst OAKS_LAB,                       6,  5 ; $28
-	mapconst VIRIDIAN_POKECENTER,            3,  5 ; $29
-	mapconst VIRIDIAN_MART,                  3,  3 ; $2A
-	mapconst VIRIDIAN_SCHOOL_HOUSE,          3,  3 ; $2B
-	mapconst VIRIDIAN_NICKNAME_HOUSE,        3,  3 ; $2C
+	mapconst VIRIDIAN_POKECENTER,            4,  7 ; $29
+	mapconst VIRIDIAN_MART,                  4,  4 ; $2A
+	mapconst VIRIDIAN_SCHOOL_HOUSE,          4,  4 ; $2B
+	mapconst VIRIDIAN_NICKNAME_HOUSE,        4,  4 ; $2C
 	mapconst VIRIDIAN_GYM,                   9, 10 ; $2D
 	mapconst DIGLETTS_CAVE_ROUTE_2,          4,  4 ; $2E
-	mapconst VIRIDIAN_FOREST_NORTH_GATE,     2,  1 ; $2F
+	mapconst VIRIDIAN_FOREST_NORTH_GATE,     4,  5 ; $2F
 	mapconst ROUTE_2_TRADE_HOUSE,            4,  4 ; $30
-	mapconst ROUTE_2_GATE,                   2,  1 ; $31
-	mapconst VIRIDIAN_FOREST_SOUTH_GATE,     2,  1 ; $32
+	mapconst ROUTE_2_GATE,                   4,  5 ; $31
+	mapconst VIRIDIAN_FOREST_SOUTH_GATE,     4,  5 ; $32
 	mapconst VIRIDIAN_FOREST,               24, 17 ; $33
 	mapconst MUSEUM_1F,                      4, 10 ; $34
 	mapconst MUSEUM_2F,                      4,  7 ; $35
@@ -212,7 +211,7 @@ DEF FIRST_INDOOR_MAP EQU const_value
 	mapconst ROUTE_18_GATE_1F,               5,  4 ; $BE
 	mapconst ROUTE_18_GATE_2F,               4,  4 ; $BF
 	mapconst SEAFOAM_ISLANDS_1F,             9, 15 ; $C0
-	mapconst ROUTE_22_GATE,                  1,  1 ; $C1
+	mapconst ROUTE_22_GATE,                  4,  5 ; $C1
 	mapconst VICTORY_ROAD_2F,                9, 15 ; $C2
 	mapconst ROUTE_12_GATE_2F,               4,  4 ; $C3
 	mapconst VERMILION_TRADE_HOUSE,          4,  4 ; $C4
@@ -267,8 +266,8 @@ DEF FIRST_INDOOR_MAP EQU const_value
 	mapconst LORELEIS_ROOM,                  6,  5 ; $F5
 	mapconst BRUNOS_ROOM,                    6,  5 ; $F6
 	mapconst AGATHAS_ROOM,                   6,  5 ; $F7
-DEF NUM_MAPS EQU const_value
+NUM_MAPS EQU const_value
 
 ; Indoor maps, such as houses, use this as the Map ID in their exit warps
 ; This map ID takes the player back to the last outdoor map they were on, stored in wLastMap
-DEF LAST_MAP EQU -1
+LAST_MAP EQU -1

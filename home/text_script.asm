@@ -66,7 +66,7 @@ DisplayTextID::
 
 ; check first byte of text for special cases
 
-MACRO dict2
+dict2: MACRO
 	cp \1
 	jr nz, .not\@
 	\2

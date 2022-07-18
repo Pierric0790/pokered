@@ -45,27 +45,24 @@ _EndNPCMovementScript::
 	ret
 
 PalletMovementScriptPointerTable::
-	dw PalletMovementScript_OakMoveRight
-	dw PalletMovementScript_PlayerMoveRight
+	dw PalletMovementScript_OakMoveLeft
+	dw PalletMovementScript_PlayerMoveLeft
 	dw PalletMovementScript_WaitAndWalkToLab
 	dw PalletMovementScript_WalkToLab
 	dw PalletMovementScript_Done
 
-PalletMovementScript_OakMoveRight:
-; Set a to 1 if player is on the left tile, else 0
+PalletMovementScript_OakMoveLeft:
 	ld a, [wXCoord]
-	ld b, a
-	ld a, $5
-	sub b
+	sub $a
 	ld [wNumStepsToTake], a
-	jr z, .playerOnRightTile
-; The player is on the left tile of the northern path out of Pallet Town and
+	jr z, .playerOnLeftTile
+; The player is on the right tile of the northern path out of Pallet Town and
 ; Prof. Oak is below.
-; Make Prof. Oak step to the right.
+; Make Prof. Oak step to the left.
 	ld b, 0
 	ld c, a
 	ld hl, wNPCMovementDirections2
-	ld a, NPC_MOVEMENT_RIGHT
+	ld a, NPC_MOVEMENT_LEFT
 	call FillMemory
 	ld [hl], $ff
 	ld a, [wSpriteIndex]
@@ -75,10 +72,10 @@ PalletMovementScript_OakMoveRight:
 	ld a, $1
 	ld [wNPCMovementScriptFunctionNum], a
 	jr .done
-; The player is on the right tile of the northern path out of Pallet Town and
+; The player is on the left tile of the northern path out of Pallet Town and
 ; Prof. Oak is below.
 ; Prof. Oak is already where he needs to be.
-.playerOnRightTile
+.playerOnLeftTile
 	ld a, $3
 	ld [wNPCMovementScriptFunctionNum], a
 .done
@@ -88,7 +85,7 @@ PalletMovementScript_OakMoveRight:
 	ld [wJoyIgnore], a
 	ret
 
-PalletMovementScript_PlayerMoveRight:
+PalletMovementScript_PlayerMoveLeft:
 	ld a, [wd730]
 	bit 0, a ; is an NPC being moved by a script?
 	ret nz ; return if Oak is still moving
@@ -103,7 +100,7 @@ PalletMovementScript_PlayerMoveRight:
 
 PalletMovementScript_WaitAndWalkToLab:
 	ld a, [wSimulatedJoypadStatesIndex]
-	and a ; is the player done moving right yet?
+	and a ; is the player done moving left yet?
 	ret nz
 
 PalletMovementScript_WalkToLab:
@@ -131,16 +128,20 @@ PalletMovementScript_WalkToLab:
 	ret
 
 RLEList_ProfOakWalkToLab:
-	db NPC_MOVEMENT_DOWN, 4
-	db NPC_MOVEMENT_RIGHT, 2
+	db NPC_MOVEMENT_DOWN, 5
+	db NPC_MOVEMENT_LEFT, 1
+	db NPC_MOVEMENT_DOWN, 5
+	db NPC_MOVEMENT_RIGHT, 3
 	db NPC_MOVEMENT_UP, 1
 	db NPC_CHANGE_FACING, 1
 	db -1 ; end
 
 RLEList_PlayerWalkToLab:
 	db D_UP, 2
-	db D_RIGHT, 2
+	db D_RIGHT, 3
 	db D_DOWN, 5
+	db D_LEFT, 1
+	db D_DOWN, 6
 	db -1 ; end
 
 PalletMovementScript_Done:

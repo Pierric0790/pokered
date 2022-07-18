@@ -1,4 +1,4 @@
-MACRO vend_item
+vend_item: MACRO
 	db \1
 	bcd3 \2
 ENDM

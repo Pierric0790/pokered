@@ -26,7 +26,7 @@ WarpTileIDPointers:
 	dw .PlateauWarpTileIDs
 	assert_table_length NUM_TILESETS
 
-MACRO warp_tiles
+warp_tiles: MACRO
 	IF _NARG
 		db \# ; all args
 	ENDC

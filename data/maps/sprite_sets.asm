@@ -39,8 +39,8 @@ MapSpriteSets:
 	db $02 ; ROUTE_25
 	assert_table_length FIRST_INDOOR_MAP
 
-DEF EAST_WEST   EQU 1
-DEF NORTH_SOUTH EQU 2
+EAST_WEST   EQU 1
+NORTH_SOUTH EQU 2
 
 ; Format:
 ; 00: determines whether the map is split EAST_WEST or NORTH_SOUTH
@@ -48,7 +48,7 @@ DEF NORTH_SOUTH EQU 2
 ; 02: sprite set ID if in the West or North side
 ; 03: sprite set ID if in the East or South side
 SplitMapSpriteSets:
-	db NORTH_SOUTH, 6, $02, $01 ; $f1
+	db NORTH_SOUTH, 37, $02, $01 ; $f1
 	db NORTH_SOUTH, 50, $02, $03 ; $f2
 	db EAST_WEST,   57, $04, $08 ; $f3
 	db NORTH_SOUTH, 21, $03, $08 ; $f4
@@ -64,7 +64,7 @@ SplitMapSpriteSets:
 SpriteSets:
 
 ; each sprite set has 9 walking sprites and 2 still sprites
-DEF SPRITE_SET_LENGTH EQU 9 + 2
+SPRITE_SET_LENGTH EQU 9 + 2
 
 ; sprite set $01
 	table_width 1

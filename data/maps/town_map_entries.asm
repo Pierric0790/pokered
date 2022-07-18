@@ -1,4 +1,4 @@
-MACRO external_map
+external_map: MACRO
 	dn \2, \1
 	dw \3
 ENDM
@@ -47,7 +47,7 @@ ExternalMapEntries:
 	assert_table_length FIRST_INDOOR_MAP
 
 
-MACRO internal_map
+internal_map: MACRO
 	db \1 + 1
 	dn \3, \2
 	dw \4

@@ -24,10 +24,10 @@ ViridianCityScript_1900b:
 	ret
 .gym_closed
 	ld a, [wYCoord]
-	cp 2
+	cp 8
 	ret nz
 	ld a, [wXCoord]
-	cp 11
+	cp 32
 	ret nz
 	ld a, $e
 	ldh [hSpriteIndexOrTextID], a
@@ -43,10 +43,10 @@ ViridianCityScript_1903d:
 	CheckEvent EVENT_GOT_POKEDEX
 	ret nz
 	ld a, [wYCoord]
-	cp 2
+	cp 9
 	ret nz
 	ld a, [wXCoord]
-	cp 3
+	cp 19
 	ret nz
 	ld a, $5
 	ldh [hSpriteIndexOrTextID], a

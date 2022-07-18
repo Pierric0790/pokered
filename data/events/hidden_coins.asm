@@ -1,4 +1,4 @@
-MACRO hidden_coin
+hidden_coin: MACRO
 	db \1, \3, \2
 ENDM
 

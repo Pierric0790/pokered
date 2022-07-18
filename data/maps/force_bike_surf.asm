@@ -1,4 +1,4 @@
-MACRO force_bike_surf
+force_bike_surf: MACRO
 	db \1, \3, \2
 ENDM
 

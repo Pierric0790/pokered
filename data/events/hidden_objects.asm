@@ -174,14 +174,14 @@ HiddenObjectPointers:
 	dw CeruleanCityHiddenObjects
 	dw Route4HiddenObjects
 
-MACRO hidden_object
+hidden_object: MACRO
 	db \2 ; y coord
 	db \1 ; x coord
 	db \3 ; item id
 	dba \4 ; object routine
 ENDM
 
-MACRO hidden_text_predef
+hidden_text_predef: MACRO
 	db \2 ; y coord
 	db \1 ; x coord
 	db_tx_pre \3 ; text id
@@ -191,7 +191,7 @@ ENDM
 ; Some hidden objects use SPRITE_FACING_* values,
 ; but these do not actually prevent the player
 ; from interacting with them in any direction.
-DEF ANY_FACING EQU $d0
+ANY_FACING EQU $d0
 
 TradeCenterHiddenObjects:
 	hidden_object  5,  4, ANY_FACING, CableClubRightGameboy
@@ -205,7 +205,7 @@ ColosseumHiddenObjects:
 
 RedsHouse2FHiddenObjects:
 	hidden_object  0,  1, SPRITE_FACING_UP, OpenRedsPC
-	hidden_object  5,  3, ANY_FACING, PrintRedSNESText
+	hidden_object  3,  5, ANY_FACING, PrintRedSNESText
 	db -1 ; end
 
 BluesHouseHiddenObjects:
@@ -223,15 +223,15 @@ OaksLabHiddenObjects:
 
 ViridianPokecenterHiddenObjects:
 	hidden_object  0,  4, SPRITE_FACING_LEFT, PrintBenchGuyText
-	hidden_object  9,  3, SPRITE_FACING_UP, OpenPokemonCenterPC
+	hidden_object 13,  3, SPRITE_FACING_UP, OpenPokemonCenterPC
 	db -1 ; end
 
 ViridianMartHiddenObjects:
 	db -1 ; end
 
 ViridianSchoolHiddenObjects:
-	hidden_text_predef  1,  4, ViridianSchoolNotebook, PrintNotebookText
-	hidden_text_predef  1,  0, ViridianSchoolBlackboard, PrintBlackboardLinkCableText
+	hidden_text_predef  3,  4, ViridianSchoolNotebook, PrintNotebookText
+	hidden_text_predef  3,  0, ViridianSchoolBlackboard, PrintBlackboardLinkCableText
 	db -1 ; end
 
 ViridianGymHiddenObjects:
@@ -558,7 +558,7 @@ BillsHouseHiddenObjects:
 	db -1 ; end
 
 ViridianCityHiddenObjects:
-	hidden_object  1,  1, POTION, HiddenItems
+	hidden_object 14,  4, POTION, HiddenItems
 	db -1 ; end
 
 SafariZoneRestHouse2HiddenObjects:

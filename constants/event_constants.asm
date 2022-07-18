@@ -772,4 +772,4 @@
 
 ; End of events
 	const_next $A00
-DEF NUM_EVENTS EQU const_value
+NUM_EVENTS EQU const_value

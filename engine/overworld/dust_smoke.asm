@@ -51,7 +51,7 @@ GetMoveBoulderDustFunctionPointer:
 	pop hl
 	ret
 
-MACRO boulder_dust_adjust
+boulder_dust_adjust: MACRO
 	db \1, \2 ; coords
 	dw \3 ; function
 ENDM

@@ -308,7 +308,7 @@ MainInBattleLoop:
 	and a
 	ret nz ; return if pokedoll was used to escape from battle
 	ld a, [wBattleMonStatus]
-	and (1 << FRZ) | SLP_MASK
+	and (1 << FRZ) | SLP ; is mon frozen or asleep?
 	jr nz, .selectEnemyMove ; if so, jump
 	ld a, [wPlayerBattleStatus1]
 	and (1 << STORING_ENERGY) | (1 << USING_TRAPPING_MOVE) ; check player is using Bide or using a multi-turn attack like wrap
@@ -2934,7 +2934,7 @@ SelectEnemyMove:
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
 	ret nz
 	ld a, [wEnemyMonStatus]
-	and (1 << FRZ) | SLP_MASK
+	and SLP | 1 << FRZ ; sleeping or frozen
 	ret nz
 	ld a, [wEnemyBattleStatus1]
 	and (1 << USING_TRAPPING_MOVE) | (1 << STORING_ENERGY) ; using a trapping move like wrap or bide
@@ -3023,7 +3023,7 @@ LinkBattleExchangeData:
 	ld a, b
 .doExchange
 	ld [wSerialExchangeNybbleSendData], a
-	vc_hook Wireless_start_exchange
+	vc_hook send_byt2
 	callfar PrintWaitingText
 .syncLoop1
 	call Serial_ExchangeNybble
@@ -3031,8 +3031,8 @@ LinkBattleExchangeData:
 	ld a, [wSerialExchangeNybbleReceiveData]
 	inc a
 	jr z, .syncLoop1
-	vc_hook Wireless_end_exchange
-	vc_patch Wireless_net_delay_1
+	vc_hook send_byt2_ret
+	vc_patch FIGHT
 IF DEF(_RED_VC) || DEF(_BLUE_VC)
 	ld b, 26
 ELSE
@@ -3044,8 +3044,8 @@ ENDC
 	call Serial_ExchangeNybble
 	dec b
 	jr nz, .syncLoop2
-	vc_hook Wireless_start_send_zero_bytes
-	vc_patch Wireless_net_delay_2
+	vc_hook send_dummy
+	vc_patch FIGHT2
 IF DEF(_RED_VC) || DEF(_BLUE_VC)
 	ld b, 26
 ELSE
@@ -3057,7 +3057,7 @@ ENDC
 	call Serial_SendZeroByte
 	dec b
 	jr nz, .syncLoop3
-	vc_hook Wireless_end_send_zero_bytes
+	vc_hook send_dummy_end
 	ret
 
 ExecutePlayerMove:
@@ -3275,7 +3275,7 @@ PrintGhostText:
 	and a
 	jr nz, .Ghost
 	ld a, [wBattleMonStatus] ; player's turn
-	and (1 << FRZ) | SLP_MASK
+	and SLP | (1 << FRZ)
 	ret nz
 	ld hl, ScaredText
 	call PrintText
@@ -3302,7 +3302,7 @@ IsGhostBattle:
 	ld a, [wCurMap]
 	cp POKEMON_TOWER_1F
 	jr c, .next
-	cp POKEMON_TOWER_7F + 1
+	cp MR_FUJIS_HOUSE
 	jr nc, .next
 	ld b, SILPH_SCOPE
 	call IsItemInBag
@@ -3317,7 +3317,7 @@ IsGhostBattle:
 CheckPlayerStatusConditions:
 	ld hl, wBattleMonStatus
 	ld a, [hl]
-	and SLP_MASK
+	and SLP ; sleep mask
 	jr z, .FrozenCheck
 ; sleeping
 	dec a
@@ -4029,7 +4029,7 @@ CheckForDisobedience:
 	call BattleRandom
 	add a
 	swap a
-	and SLP_MASK
+	and SLP ; sleep mask
 	jr z, .monNaps ; keep trying until we get at least 1 turn of sleep
 	ld [wBattleMonStatus], a
 	ld hl, BeganToNapText
@@ -5362,7 +5362,7 @@ MoveHitTest:
 	cp DREAM_EATER_EFFECT
 	jr nz, .swiftCheck
 	ld a, [bc]
-	and SLP_MASK
+	and SLP ; is the target pokemon sleeping?
 	jp z, .moveMissed
 .swiftCheck
 	ld a, [de]
@@ -5796,7 +5796,7 @@ ExecuteEnemyMoveDone:
 CheckEnemyStatusConditions:
 	ld hl, wEnemyMonStatus
 	ld a, [hl]
-	and SLP_MASK
+	and SLP ; sleep mask
 	jr z, .checkIfFrozen
 	dec a ; decrement number of turns left
 	ld [wEnemyMonStatus], a
@@ -6677,8 +6677,8 @@ BattleRandom:
 	ld a, [hl]
 	pop bc
 	pop hl
-	vc_hook Unknown_BattleRandom_ret_c
-	vc_patch BattleRandom_ret
+	vc_hook fight_ret_c
+	vc_patch fight_ret
 IF DEF(_RED_VC) || DEF(_BLUE_VC)
 	ret
 ELSE
@@ -6749,9 +6749,9 @@ HandleExplodingAnimation:
 
 PlayMoveAnimation:
 	ld [wAnimationID], a
-	vc_hook_red Reduce_move_anim_flashing_Confusion
+	vc_hook_red FPA_conf_Begin
 	call Delay3
-	vc_hook_red Reduce_move_anim_flashing_Psychic
+	vc_hook_red FPA_phy_Begin
 	predef_jump MoveAnimation
 
 InitBattle::

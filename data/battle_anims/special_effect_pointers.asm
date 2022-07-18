@@ -1,4 +1,4 @@
-MACRO special_effect
+special_effect: MACRO
 	db \1
 	dw \2
 ENDM

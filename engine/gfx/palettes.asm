@@ -484,7 +484,7 @@ CheckSGB:
 	ldh a, [rJOYP]
 	ldh a, [rJOYP]
 	call Wait7000
-	vc_hook Unknown_network_reset
+	vc_hook Network_RESET
 	call Wait7000
 	ld a, $30
 	ldh [rJOYP], a

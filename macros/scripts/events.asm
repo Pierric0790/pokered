@@ -1,7 +1,7 @@
 ;\1 = event index
 ;\2 = return result in carry instead of zero flag
-MACRO CheckEvent
-	DEF event_byte = ((\1) / 8)
+CheckEvent: MACRO
+event_byte = ((\1) / 8)
 	ld a, [wEventFlags + event_byte]
 
 	IF _NARG > 1
@@ -19,9 +19,9 @@ ENDM
 
 
 ;\1 = event index
-MACRO CheckEventReuseA
+CheckEventReuseA: MACRO
 	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld a, [wEventFlags + event_byte]
 	ENDC
 
@@ -31,10 +31,10 @@ ENDM
 
 ;\1 = event index
 ;\2 = event index of the last event used before the branch
-MACRO CheckEventAfterBranchReuseA
-	DEF event_byte = ((\2) / 8)
+CheckEventAfterBranchReuseA: MACRO
+event_byte = ((\2) / 8)
 	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld a, [wEventFlags + event_byte]
 	ENDC
 
@@ -45,7 +45,7 @@ ENDM
 ;\1 = reg
 ;\2 = event index
 ;\3 = event index this event is relative to (optional, this is needed when there is a fixed flag address)
-MACRO EventFlagBit
+EventFlagBit: MACRO
 	IF _NARG > 2
 		ld \1, ((\3) % 8) + ((\2) - (\3))
 	ELSE
@@ -56,24 +56,24 @@ ENDM
 
 ;\1 = reg
 ;\2 = event index
-MACRO EventFlagAddress
-	DEF event_byte = ((\2) / 8)
+EventFlagAddress: MACRO
+event_byte = ((\2) / 8)
 	ld \1, wEventFlags + event_byte
 ENDM
 
 
 ;\1 = event index
-MACRO CheckEventHL
-	DEF event_byte = ((\1) / 8)
+CheckEventHL: MACRO
+event_byte = ((\1) / 8)
 	ld hl, wEventFlags + event_byte
 	bit (\1) % 8, [hl]
 ENDM
 
 
 ;\1 = event index
-MACRO CheckEventReuseHL
-	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+CheckEventReuseHL: MACRO
+IF event_byte != ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld hl, wEventFlags + event_byte
 	ENDC
 
@@ -83,18 +83,18 @@ ENDM
 
 ; dangerous, only use when HL is guaranteed to be the desired value
 ;\1 = event index
-MACRO CheckEventForceReuseHL
-	DEF event_byte = ((\1) / 8)
+CheckEventForceReuseHL: MACRO
+event_byte = ((\1) / 8)
 	bit (\1) % 8, [hl]
 ENDM
 
 
 ;\1 = event index
 ;\2 = event index of the last event used before the branch
-MACRO CheckEventAfterBranchReuseHL
-	DEF event_byte = ((\2) / 8)
-	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+CheckEventAfterBranchReuseHL: MACRO
+event_byte = ((\2) / 8)
+IF event_byte != ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld hl, wEventFlags + event_byte
 	ENDC
 
@@ -103,8 +103,8 @@ ENDM
 
 
 ;\1 = event index
-MACRO CheckAndSetEvent
-	DEF event_byte = ((\1) / 8)
+CheckAndSetEvent: MACRO
+event_byte = ((\1) / 8)
 	ld hl, wEventFlags + event_byte
 	bit (\1) % 8, [hl]
 	set (\1) % 8, [hl]
@@ -112,8 +112,8 @@ ENDM
 
 
 ;\1 = event index
-MACRO CheckAndResetEvent
-	DEF event_byte = ((\1) / 8)
+CheckAndResetEvent: MACRO
+event_byte = ((\1) / 8)
 	ld hl, wEventFlags + event_byte
 	bit (\1) % 8, [hl]
 	res (\1) % 8, [hl]
@@ -121,7 +121,7 @@ ENDM
 
 
 ;\1 = event index
-MACRO CheckAndSetEventA
+CheckAndSetEventA: MACRO
 	ld a, [wEventFlags + ((\1) / 8)]
 	bit (\1) % 8, a
 	set (\1) % 8, a
@@ -130,7 +130,7 @@ ENDM
 
 
 ;\1 = event index
-MACRO CheckAndResetEventA
+CheckAndResetEventA: MACRO
 	ld a, [wEventFlags + ((\1) / 8)]
 	bit (\1) % 8, a
 	res (\1) % 8, a
@@ -139,17 +139,17 @@ ENDM
 
 
 ;\1 = event index
-MACRO SetEvent
-	DEF event_byte = ((\1) / 8)
+SetEvent: MACRO
+event_byte = ((\1) / 8)
 	ld hl, wEventFlags + event_byte
 	set (\1) % 8, [hl]
 ENDM
 
 
 ;\1 = event index
-MACRO SetEventReuseHL
+SetEventReuseHL: MACRO
 	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld hl, wEventFlags + event_byte
 	ENDC
 
@@ -159,10 +159,10 @@ ENDM
 
 ;\1 = event index
 ;\2 = event index of the last event used before the branch
-MACRO SetEventAfterBranchReuseHL
-	DEF event_byte = ((\2) / 8)
-	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+SetEventAfterBranchReuseHL: MACRO
+event_byte = ((\2) / 8)
+IF event_byte != ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld hl, wEventFlags + event_byte
 	ENDC
 
@@ -172,8 +172,8 @@ ENDM
 
 ; dangerous, only use when HL is guaranteed to be the desired value
 ;\1 = event index
-MACRO SetEventForceReuseHL
-	DEF event_byte = ((\1) / 8)
+SetEventForceReuseHL: MACRO
+event_byte = ((\1) / 8)
 	set (\1) % 8, [hl]
 ENDM
 
@@ -181,7 +181,7 @@ ENDM
 ;\1 = event index
 ;\2 = event index
 ;\3, \4, ... = additional (optional) event indices
-MACRO SetEvents
+SetEvents: MACRO
 	SetEvent \1
 	REPT _NARG - 1
 		SetEventReuseHL \2
@@ -191,17 +191,17 @@ ENDM
 
 
 ;\1 = event index
-MACRO ResetEvent
-	DEF event_byte = ((\1) / 8)
+ResetEvent: MACRO
+event_byte = ((\1) / 8)
 	ld hl, wEventFlags + event_byte
 	res (\1) % 8, [hl]
 ENDM
 
 
 ;\1 = event index
-MACRO ResetEventReuseHL
+ResetEventReuseHL: MACRO
 	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld hl, wEventFlags + event_byte
 	ENDC
 
@@ -211,10 +211,10 @@ ENDM
 
 ;\1 = event index
 ;\2 = event index of the last event used before the branch
-MACRO ResetEventAfterBranchReuseHL
-	DEF event_byte = ((\2) / 8)
-	IF event_byte != ((\1) / 8)
-		DEF event_byte = ((\1) / 8)
+ResetEventAfterBranchReuseHL: MACRO
+event_byte = ((\2) / 8)
+IF event_byte != ((\1) / 8)
+event_byte = ((\1) / 8)
 		ld hl, wEventFlags + event_byte
 	ENDC
 
@@ -224,8 +224,8 @@ ENDM
 
 ; dangerous, only use when HL is guaranteed to be the desired value
 ;\1 = event index
-MACRO ResetEventForceReuseHL
-	DEF event_byte = ((\1) / 8)
+ResetEventForceReuseHL: MACRO
+event_byte = ((\1) / 8)
 	res (\1) % 8, [hl]
 ENDM
 
@@ -233,7 +233,7 @@ ENDM
 ;\1 = event index
 ;\2 = event index
 ;\3 = event index (optional)
-MACRO ResetEvents
+ResetEvents: MACRO
 	ResetEvent \1
 	REPT _NARG - 1
 		ResetEventReuseHL \2
@@ -244,9 +244,9 @@ ENDM
 
 ;\1 = start
 ;\2 = end
-MACRO SetEventRange
-	DEF event_start_byte = ((\1) / 8)
-	DEF event_end_byte = ((\2) / 8)
+SetEventRange: MACRO
+event_start_byte = ((\1) / 8)
+event_end_byte = ((\2) / 8)
 
 	IF event_end_byte < event_start_byte
 		FAIL "Incorrect argument order in SetEventRange."
@@ -257,12 +257,12 @@ MACRO SetEventRange
 		or (1 << (((\2) % 8) + 1)) - (1 << ((\1) % 8))
 		ld [wEventFlags + event_start_byte], a
 	ELSE
-		DEF event_fill_start = event_start_byte + 1
-		DEF event_fill_count = event_end_byte - event_start_byte - 1
+event_fill_start = event_start_byte + 1
+event_fill_count = event_end_byte - event_start_byte - 1
 
 		IF ((\1) % 8) == 0
-			DEF event_fill_start -= 1
-			DEF event_fill_count += 1
+event_fill_start -= 1
+event_fill_count += 1
 		ELSE
 			ld a, [wEventFlags + event_start_byte]
 			or $ff - ((1 << ((\1) % 8)) - 1)
@@ -270,7 +270,7 @@ MACRO SetEventRange
 		ENDC
 
 		IF ((\2) % 8) == 7
-			DEF event_fill_count += 1
+event_fill_count += 1
 		ENDC
 
 		IF event_fill_count == 1
@@ -306,9 +306,9 @@ ENDM
 ;\1 = start
 ;\2 = end
 ;\3 = assume a is 0 if present
-MACRO ResetEventRange
-	DEF event_start_byte = ((\1) / 8)
-	DEF event_end_byte = ((\2) / 8)
+ResetEventRange: MACRO
+event_start_byte = ((\1) / 8)
+event_end_byte = ((\2) / 8)
 
 	IF event_end_byte < event_start_byte
 		FAIL "Incorrect argument order in ResetEventRange."
@@ -319,12 +319,12 @@ MACRO ResetEventRange
 		and ~((1 << (((\2) % 8) + 1)) - (1 << ((\1) % 8))) & $ff
 		ld [wEventFlags + event_start_byte], a
 	ELSE
-		DEF event_fill_start = event_start_byte + 1
-		DEF event_fill_count = event_end_byte - event_start_byte - 1
+event_fill_start = event_start_byte + 1
+event_fill_count = event_end_byte - event_start_byte - 1
 
 		IF ((\1) % 8) == 0
-			DEF event_fill_start -= 1
-			DEF event_fill_count += 1
+event_fill_start -= 1
+event_fill_count += 1
 		ELSE
 			ld a, [wEventFlags + event_start_byte]
 			and ~($ff - ((1 << ((\1) % 8)) - 1)) & $ff
@@ -332,7 +332,7 @@ MACRO ResetEventRange
 		ENDC
 
 		IF ((\2) % 8) == 7
-			DEF event_fill_count += 1
+event_fill_count += 1
 		ENDC
 
 		IF event_fill_count == 1
@@ -375,10 +375,10 @@ ENDM
 ;\1 = event index 1
 ;\2 = event index 2
 ;\3 = try to reuse a (optional)
-MACRO CheckBothEventsSet
+CheckBothEventsSet: MACRO
 	IF ((\1) / 8) == ((\2) / 8)
 		IF (_NARG < 3) || (((\1) / 8) != event_byte)
-			DEF event_byte = ((\1) / 8)
+event_byte = ((\1) / 8)
 			ld a, [wEventFlags + ((\1) / 8)]
 		ENDC
 		and (1 << ((\1) % 8)) | (1 << ((\2) % 8))
@@ -411,7 +411,7 @@ ENDM
 ; returns the complement of whether either event is set in Z flag
 ;\1 = event index 1
 ;\2 = event index 2
-MACRO CheckEitherEventSet
+CheckEitherEventSet: MACRO
 	IF ((\1) / 8) == ((\2) / 8)
 		ld a, [wEventFlags + ((\1) / 8)]
 		and (1 << ((\1) % 8)) | (1 << ((\2) % 8))
@@ -441,7 +441,7 @@ ENDM
 ; for handling fixed event bits when events are inserted/removed
 ;\1 = event index
 ;\2 = fixed flag bit
-MACRO AdjustEventBit
+AdjustEventBit: MACRO
 	IF ((\1) % 8) != (\2)
 		add ((\1) % 8) - (\2)
 	ENDC

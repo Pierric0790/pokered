@@ -214,7 +214,7 @@ AttackAnimationPointers:
 ; if \2 is a subanimation_id:
 ;\3: tileset_id
 ;\4: delay
-MACRO battle_anim
+battle_anim: MACRO
 	IF _NARG == 4
 		db (\3 << 6) | \4
 		db \1 - 1

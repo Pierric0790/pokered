@@ -662,7 +662,7 @@ BattleTransition_Circle_Sub2:
 	const CIRCLE_LEFT
 	const CIRCLE_RIGHT
 
-MACRO half_circle
+half_circle: MACRO
 	; quadrant x, circle data, target coord
 	db \1
 	dw \2

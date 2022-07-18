@@ -1,44 +1,44 @@
-DEF text   EQUS "db TX_START,"    ; Start writing text.
-DEF next   EQUS "db \"<NEXT>\","  ; Move a line down.
-DEF line   EQUS "db \"<LINE>\","  ; Start writing at the bottom line.
-DEF para   EQUS "db \"<PARA>\","  ; Start a new paragraph.
-DEF cont   EQUS "db \"<CONT>\","  ; Scroll to the next line.
-DEF done   EQUS "db \"<DONE>\""   ; End a text box.
-DEF prompt EQUS "db \"<PROMPT>\"" ; Prompt the player to end a text box (initiating some other event).
+text   EQUS "db TX_START,"    ; Start writing text.
+next   EQUS "db \"<NEXT>\","  ; Move a line down.
+line   EQUS "db \"<LINE>\","  ; Start writing at the bottom line.
+para   EQUS "db \"<PARA>\","  ; Start a new paragraph.
+cont   EQUS "db \"<CONT>\","  ; Scroll to the next line.
+done   EQUS "db \"<DONE>\""   ; End a text box.
+prompt EQUS "db \"<PROMPT>\"" ; Prompt the player to end a text box (initiating some other event).
 
-DEF page   EQUS "db \"<PAGE>\","         ; Start a new Pokédex page.
-DEF dex    EQUS "db \"<DEXEND>\", \"@\"" ; End a Pokédex entry.
+page   EQUS "db \"<PAGE>\","         ; Start a new Pokédex page.
+dex    EQUS "db \"<DEXEND>\", \"@\"" ; End a Pokédex entry.
 
 
 ; TextCommandJumpTable indexes (see home/text.asm)
 	const_def
 
 	const TX_START ; $00
-MACRO text_start
+text_start: MACRO
 	db TX_START
 ENDM
 
 	const TX_RAM ; $01
-MACRO text_ram
+text_ram: MACRO
 	db TX_RAM
 	dw \1 ; address to read from
 ENDM
 
 	const TX_BCD ; $02
-MACRO text_bcd
+text_bcd: MACRO
 	db TX_BCD
 	dw \1 ; address to read from
 	db \2 ; number of bytes + print flags
 ENDM
 
 	const TX_MOVE ; $03
-MACRO text_move
+text_move: MACRO
 	db TX_MOVE
 	dw \1 ; address of the new location
 ENDM
 
 	const TX_BOX ; $04
-MACRO text_box
+text_box: MACRO
 ; draw box
 	db TX_BOX
 	dw \1 ; address of upper left corner
@@ -46,27 +46,27 @@ MACRO text_box
 ENDM
 
 	const TX_LOW ; $05
-MACRO text_low
+text_low: MACRO
 	db TX_LOW
 ENDM
 
 	const TX_PROMPT_BUTTON ; $06
-MACRO text_promptbutton
+text_promptbutton: MACRO
 	db TX_PROMPT_BUTTON
 ENDM
 
 	const TX_SCROLL ; $07
-MACRO text_scroll
+text_scroll: MACRO
 	db TX_SCROLL
 ENDM
 
 	const TX_START_ASM ; $08
-MACRO text_asm
+text_asm: MACRO
 	db TX_START_ASM
 ENDM
 
 	const TX_NUM ; $09
-MACRO text_decimal
+text_decimal: MACRO
 ; print a big-endian decimal number.
 	db TX_NUM
 	dw \1 ; address to read from
@@ -74,76 +74,76 @@ MACRO text_decimal
 ENDM
 
 	const TX_PAUSE ; $0a
-MACRO text_pause
+text_pause: MACRO
 	db TX_PAUSE
 ENDM
 
 	const TX_SOUND_GET_ITEM_1 ; $0b
-MACRO sound_get_item_1
+sound_get_item_1: MACRO
 	db TX_SOUND_GET_ITEM_1
 ENDM
 
-DEF TX_SOUND_LEVEL_UP EQU TX_SOUND_GET_ITEM_1
-DEF sound_level_up EQUS "sound_get_item_1"
+TX_SOUND_LEVEL_UP EQU TX_SOUND_GET_ITEM_1
+sound_level_up EQUS "sound_get_item_1"
 
 	const TX_DOTS ; $0c
-MACRO text_dots
+text_dots: MACRO
 	db TX_DOTS
 	db \1 ; number of ellipses to draw
 ENDM
 
 	const TX_WAIT_BUTTON ; $0d
-MACRO text_waitbutton
+text_waitbutton: MACRO
 	db TX_WAIT_BUTTON
 ENDM
 
 	const TX_SOUND_POKEDEX_RATING ; $0e
-MACRO sound_pokedex_rating
+sound_pokedex_rating: MACRO
 	db TX_SOUND_POKEDEX_RATING
 ENDM
 
 	const TX_SOUND_GET_ITEM_1_DUPLICATE ; $0f
-MACRO sound_get_item_1_duplicate
+sound_get_item_1_duplicate: MACRO
 	db TX_SOUND_GET_ITEM_1_DUPLICATE
 ENDM
 
 	const TX_SOUND_GET_ITEM_2 ; $10
-MACRO sound_get_item_2
+sound_get_item_2: MACRO
 	db TX_SOUND_GET_ITEM_2
 ENDM
 
 	const TX_SOUND_GET_KEY_ITEM ; $11
-MACRO sound_get_key_item
+sound_get_key_item: MACRO
 	db TX_SOUND_GET_KEY_ITEM
 ENDM
 
 	const TX_SOUND_CAUGHT_MON ; $12
-MACRO sound_caught_mon
+sound_caught_mon: MACRO
 	db TX_SOUND_CAUGHT_MON
 ENDM
 
 	const TX_SOUND_DEX_PAGE_ADDED ; $13
-MACRO sound_dex_page_added
+sound_dex_page_added: MACRO
 	db TX_SOUND_DEX_PAGE_ADDED
 ENDM
 
 	const TX_SOUND_CRY_NIDORINA ; $14
-MACRO sound_cry_nidorina
+sound_cry_nidorina: MACRO
 	db TX_SOUND_CRY_NIDORINA
 ENDM
 
 	const TX_SOUND_CRY_PIDGEOT ; $15
-MACRO sound_cry_pidgeot
+sound_cry_pidgeot: MACRO
 	db TX_SOUND_CRY_PIDGEOT
 ENDM
 
 	const TX_SOUND_CRY_DEWGONG ; $16
-MACRO sound_cry_dewgong
+sound_cry_dewgong: MACRO
 	db TX_SOUND_CRY_DEWGONG
 ENDM
 
 	const TX_FAR ; $17
-MACRO text_far
+text_far: MACRO
 	db TX_FAR
 	dab \1 ; address of text commands
 ENDM
@@ -152,7 +152,7 @@ ENDM
 	const_next $50
 
 	const TX_END ; $50
-MACRO text_end
+text_end: MACRO
 	db TX_END
 ENDM
 
@@ -161,12 +161,12 @@ ENDM
 	const_def -1, -1
 
 	const TX_SCRIPT_POKECENTER_NURSE ; $ff
-MACRO script_pokecenter_nurse
+script_pokecenter_nurse: MACRO
 	db TX_SCRIPT_POKECENTER_NURSE
 ENDM
 
 	const TX_SCRIPT_MART ; $fe
-MACRO script_mart
+script_mart: MACRO
 	db TX_SCRIPT_MART
 	db _NARG ; number of items
 	IF _NARG
@@ -176,12 +176,12 @@ MACRO script_mart
 ENDM
 
 	const TX_SCRIPT_BILLS_PC ; $fd
-MACRO script_bills_pc
+script_bills_pc: MACRO
 	db TX_SCRIPT_BILLS_PC
 ENDM
 
 	const TX_SCRIPT_PLAYERS_PC ; $fc
-MACRO script_players_pc
+script_players_pc: MACRO
 	db TX_SCRIPT_PLAYERS_PC
 ENDM
 
@@ -190,23 +190,23 @@ ENDM
 	const_skip ; $fa
 
 	const TX_SCRIPT_POKECENTER_PC ; $f9
-MACRO script_pokecenter_pc
+script_pokecenter_pc: MACRO
 	db TX_SCRIPT_POKECENTER_PC
 ENDM
 
 	const_skip ; $f8
 
 	const TX_SCRIPT_PRIZE_VENDOR ; $f7
-MACRO script_prize_vendor
+script_prize_vendor: MACRO
 	db TX_SCRIPT_PRIZE_VENDOR
 ENDM
 
 	const TX_SCRIPT_CABLE_CLUB_RECEPTIONIST ; $f6
-MACRO script_cable_club_receptionist
+script_cable_club_receptionist: MACRO
 	db TX_SCRIPT_CABLE_CLUB_RECEPTIONIST
 ENDM
 
 	const TX_SCRIPT_VENDING_MACHINE ; $f5
-MACRO script_vending_machine
+script_vending_machine: MACRO
 	db TX_SCRIPT_VENDING_MACHINE
 ENDM

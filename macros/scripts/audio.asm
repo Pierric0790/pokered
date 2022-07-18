@@ -1,4 +1,4 @@
-MACRO audio_header
+audio_header: MACRO
 	db (_NARG - 2) << 6 | \2
 	dw \1_\2
 	IF _NARG > 2
@@ -24,7 +24,7 @@ ENDM
 ;               small magnitude means quick change, large magnitude means slow change
 ;               in signed magnitude representation, so a value of 8 is the same as (negative) 0
 	const pitch_sweep_cmd ; $10
-MACRO pitch_sweep
+pitch_sweep: MACRO
 	db pitch_sweep_cmd
 	IF \2 < 0
 		db (\1 << 4) | (%1000 | (\2 * -1))
@@ -41,8 +41,8 @@ ENDM
 ; fade: positive value means decrease in volume, negative value means increase in volume
 ;       small magnitude means quick change, large magnitude means slow change
 ;       in signed magnitude representation, so a value of 8 is the same as (negative) 0
-DEF square_note_cmd EQU sfx_note_cmd ; $20
-MACRO square_note
+square_note_cmd EQU sfx_note_cmd ; $20
+square_note: MACRO
 	db square_note_cmd | \1
 	IF \3 < 0
 		db (\2 << 4) | (%1000 | (\3 * -1))
@@ -56,8 +56,8 @@ ENDM
 ; fade: positive value means decrease in volume, negative value means increase in volume
 ;       small magnitude means quick change, large magnitude means slow change
 ;       in signed magnitude representation, so a value of 8 is the same as (negative) 0
-DEF noise_note_cmd EQU sfx_note_cmd ; $20
-MACRO noise_note
+noise_note_cmd EQU sfx_note_cmd ; $20
+noise_note: MACRO
 	db noise_note_cmd | \1
 	IF \3 < 0
 		db (\2 << 4) | (%1000 | (\3 * -1))
@@ -68,7 +68,7 @@ MACRO noise_note
 ENDM
 
 ; arguments: pitch, length [1, 16]
-MACRO note
+note: MACRO
 	db (\1 << 4) | (\2 - 1)
 ENDM
 
@@ -76,7 +76,7 @@ ENDM
 
 ; arguments: instrument [1, 19], length [1, 16]
 	const drum_note_cmd ; $b0
-MACRO drum_note
+drum_note: MACRO
 	db drum_note_cmd | (\2 - 1)
 	db \1
 ENDM
@@ -85,7 +85,7 @@ ENDM
 ; like drum_note but one 1 byte instead of 2
 ; can only be used with instruments 1-10, excluding 2
 ; unused
-MACRO drum_note_short
+drum_note_short: MACRO
 	db (\1 << 4) | (\2 - 1)
 ENDM
 
@@ -93,7 +93,7 @@ ENDM
 
 ; arguments: length [1, 16]
 	const rest_cmd ; $c0
-MACRO rest
+rest: MACRO
 	db rest_cmd | (\1 - 1)
 ENDM
 
@@ -104,7 +104,7 @@ ENDM
 ;       small magnitude means quick change, large magnitude means slow change
 ;       in signed magnitude representation, so a value of 8 is the same as (negative) 0
 	const note_type_cmd ; $d0
-MACRO note_type
+note_type: MACRO
 	db note_type_cmd | \1
 	IF \3 < 0
 		db (\2 << 4) | (%1000 | (\3 * -1))
@@ -114,8 +114,8 @@ MACRO note_type
 ENDM
 
 ; arguments: speed [0, 15]
-DEF drum_speed_cmd EQU note_type_cmd ; $d0
-MACRO drum_speed
+drum_speed_cmd EQU note_type_cmd ; $d0
+drum_speed: MACRO
 	db drum_speed_cmd | \1
 ENDM
 
@@ -123,7 +123,7 @@ ENDM
 
 ; arguments: octave [1, 8]
 	const octave_cmd ; $e0
-MACRO octave
+octave: MACRO
 	db octave_cmd | (8 - \1)
 ENDM
 
@@ -131,7 +131,7 @@ ENDM
 
 ; when enabled, effective frequency used is incremented by 1
 	const toggle_perfect_pitch_cmd ; $e8
-MACRO toggle_perfect_pitch
+toggle_perfect_pitch: MACRO
 	db toggle_perfect_pitch_cmd
 ENDM
 
@@ -142,7 +142,7 @@ ENDM
 ; depth: amplitude of vibrato wave
 ; rate: frequency of vibrato wave
 	const vibrato_cmd ; $ea
-MACRO vibrato
+vibrato: MACRO
 	db vibrato_cmd
 	db \1
 	db (\2 << 4) | \3
@@ -150,7 +150,7 @@ ENDM
 
 ; arguments: length [1, 256], octave [1, 8], pitch
 	const pitch_slide_cmd ; $eb
-MACRO pitch_slide
+pitch_slide: MACRO
 	db pitch_slide_cmd
 	db \1 - 1
 	db ((8 - \2) << 4) | \3
@@ -158,7 +158,7 @@ ENDM
 
 ; arguments: duty cycle [0, 3] (12.5%, 25%, 50%, 75%)
 	const duty_cycle_cmd ; $ec
-MACRO duty_cycle
+duty_cycle: MACRO
 	db duty_cycle_cmd
 	db \1
 ENDM
@@ -170,27 +170,27 @@ ENDM
 ; if larger than $100, large note speed or note length values might cause overflow
 ; stored in big endian
 	const tempo_cmd ; $ed
-MACRO tempo
+tempo: MACRO
 	db tempo_cmd
 	db HIGH(\1), LOW(\1)
 ENDM
 
 ; arguments: left output enable mask, right output enable mask
 	const stereo_panning_cmd ; $ee
-MACRO stereo_panning
+stereo_panning: MACRO
 	db stereo_panning_cmd
 	db (\1 << 4) | \2
 ENDM
 
 	const unknownmusic0xef_cmd ; $ef
-MACRO unknownmusic0xef
+unknownmusic0xef: MACRO
 	db unknownmusic0xef_cmd
 	db \1
 ENDM
 
 ; arguments: left master volume [0, 7], right master volume [0, 7]
 	const volume_cmd ; $f0
-MACRO volume
+volume: MACRO
 	db volume_cmd
 	db (\1 << 4) | \2
 ENDM
@@ -199,7 +199,7 @@ ENDM
 
 ; when enabled, the sfx data is interpreted as music data
 	const execute_music_cmd ; $f8
-MACRO execute_music
+execute_music: MACRO
 	db execute_music_cmd
 ENDM
 
@@ -207,27 +207,27 @@ ENDM
 
 ; arguments: duty cycle 1, duty cycle 2, duty cycle 3, duty cycle 4
 	const duty_cycle_pattern_cmd ; $fc
-MACRO duty_cycle_pattern
+duty_cycle_pattern: MACRO
 	db duty_cycle_pattern_cmd
 	db \1 << 6 | \2 << 4 | \3 << 2 | \4
 ENDM
 
 ; arguments: address
 	const sound_call_cmd ; $fd
-MACRO sound_call
+sound_call: MACRO
 	db sound_call_cmd
 	dw \1
 ENDM
 
 ; arguments: count, address
 	const sound_loop_cmd ; $fe
-MACRO sound_loop
+sound_loop: MACRO
 	db sound_loop_cmd
 	db \1
 	dw \2
 ENDM
 
 	const sound_ret_cmd ; $ff
-MACRO sound_ret
+sound_ret: MACRO
 	db sound_ret_cmd
 ENDM

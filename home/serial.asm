@@ -230,7 +230,7 @@ Serial_PrintWaitingTextAndSyncAndExchangeNybble::
 	jp LoadScreenTilesFromBuffer1
 
 Serial_SyncAndExchangeNybble::
-	vc_hook Wireless_WaitLinkTransfer
+	vc_hook send_send_buf2
 	ld a, $ff
 	ld [wSerialExchangeNybbleReceiveData], a
 .loop1
@@ -254,7 +254,7 @@ Serial_SyncAndExchangeNybble::
 	ld a, [wSerialExchangeNybbleReceiveData]
 	inc a
 	jr z, .loop1
-	vc_patch Wireless_net_delay_3
+	vc_patch Network10
 IF DEF(_RED_VC) || DEF(_BLUE_VC)
 	ld b, 26
 ELSE
@@ -266,7 +266,7 @@ ENDC
 	call Serial_ExchangeNybble
 	dec b
 	jr nz, .loop2
-	vc_patch Wireless_net_delay_4
+	vc_patch Network11
 IF DEF(_RED_VC) || DEF(_BLUE_VC)
 	ld b, 26
 ELSE
@@ -280,7 +280,7 @@ ENDC
 	jr nz, .loop3
 	ld a, [wSerialExchangeNybbleReceiveData]
 	ld [wSerialSyncAndExchangeNybbleReceiveData], a
-	vc_hook Wireless_WaitLinkTransfer_ret
+	vc_hook send_send_buf2_ret
 	ret
 
 Serial_ExchangeNybble::

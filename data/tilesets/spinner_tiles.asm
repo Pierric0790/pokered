@@ -1,4 +1,4 @@
-MACRO spinner
+spinner: MACRO
 ; \1: source
 ; \2: offset (BANK() chokes on literals)
 ; \3: dest

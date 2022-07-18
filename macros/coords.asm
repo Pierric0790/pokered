@@ -1,4 +1,4 @@
-MACRO validate_coords
+validate_coords: MACRO
 	IF _NARG >= 4
 		IF \1 >= \3
 			fail "x coord out of range"
@@ -11,11 +11,11 @@ MACRO validate_coords
 	ENDC
 ENDM
 
-DEF hlcoord EQUS "coord hl,"
-DEF bccoord EQUS "coord bc,"
-DEF decoord EQUS "coord de,"
+hlcoord EQUS "coord hl,"
+bccoord EQUS "coord bc,"
+decoord EQUS "coord de,"
 
-MACRO coord
+coord: MACRO
 ; register, x, y[, origin]
 	validate_coords \2, \3
 	IF _NARG >= 4
@@ -25,11 +25,11 @@ MACRO coord
 	ENDC
 ENDM
 
-DEF hlbgcoord EQUS "bgcoord hl,"
-DEF bcbgcoord EQUS "bgcoord bc,"
-DEF debgcoord EQUS "bgcoord de,"
+hlbgcoord EQUS "bgcoord hl,"
+bcbgcoord EQUS "bgcoord bc,"
+debgcoord EQUS "bgcoord de,"
 
-MACRO bgcoord
+bgcoord: MACRO
 ; register, x, y[, origin]
 	validate_coords \2, \3, BG_MAP_WIDTH, BG_MAP_HEIGHT
 	IF _NARG >= 4
@@ -39,22 +39,22 @@ MACRO bgcoord
 	ENDC
 ENDM
 
-DEF hlowcoord EQUS "owcoord hl,"
-DEF bcowcoord EQUS "owcoord bc,"
-DEF deowcoord EQUS "owcoord de,"
+hlowcoord EQUS "owcoord hl,"
+bcowcoord EQUS "owcoord bc,"
+deowcoord EQUS "owcoord de,"
 
-MACRO owcoord
+owcoord: MACRO
 ; register, x, y, map width
 	ld \1, wOverworldMap + ((\2) + 3) + (((\3) + 3) * ((\4) + (3 * 2)))
 ENDM
 
-MACRO event_displacement
+event_displacement: MACRO
 ; map width, x blocks, y blocks
 	dw (wOverworldMap + 7 + (\1) + ((\1) + 6) * ((\3) >> 1) + ((\2) >> 1))
 	db \3, \2
 ENDM
 
-MACRO dwcoord
+dwcoord: MACRO
 ; x, y
 	validate_coords \1, \2
 	IF _NARG >= 3
@@ -64,7 +64,7 @@ MACRO dwcoord
 	ENDC
 ENDM
 
-MACRO ldcoord_a
+ldcoord_a: MACRO
 ; x, y[, origin]
 	validate_coords \1, \2
 	IF _NARG >= 3
@@ -74,7 +74,7 @@ MACRO ldcoord_a
 	ENDC
 ENDM
 
-MACRO lda_coord
+lda_coord: MACRO
 ; x, y[, origin]
 	validate_coords \1, \2
 	IF _NARG >= 3
@@ -84,7 +84,7 @@ MACRO lda_coord
 	ENDC
 ENDM
 
-MACRO dbmapcoord
+dbmapcoord: MACRO
 ; x, y
 	db \2, \1
 ENDM

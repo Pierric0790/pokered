@@ -1,4 +1,4 @@
-MACRO move
+move: MACRO
 	db \1 ; animation (interchangeable with move id)
 	db \2 ; effect
 	db \3 ; power

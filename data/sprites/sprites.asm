@@ -1,4 +1,4 @@
-MACRO overworld_sprite
+overworld_sprite: MACRO
 	dw \1
 	db \2 tiles
 	db BANK(\1)
